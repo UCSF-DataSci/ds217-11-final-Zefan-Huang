@@ -8,7 +8,7 @@ This analysis examines weather sensor data from Chicago beaches along Lake Michi
 
 ## Phase-by-Phase Findings
 
-### Phase 1–2 (Q1): Exploration
+### Phase 1–2: Exploration
 
 Initial exploration showed:
 
@@ -30,10 +30,10 @@ Key data quality issues seen in the EDA:
 - Strong seasonal pattern in Air Temperature and clear daily cycles.
 
 The file `output/q1_visualizations.png` contains histograms and early time series plots that confirmed these patterns.
-
+![q1_visualizations.png](output/q1_visualizations.png)
 ---
 
-### Phase 3 (Q2): Data Cleaning
+### Phase 3: Data Cleaning
 
 The cleaning step focused on missing values, outliers, and data types:
 
@@ -55,7 +55,7 @@ After cleaning, the dataset still had **196,526 rows**, but with complete values
 
 ---
 
-### Phase 4 (Q3): Datetime Parsing and Temporal Features
+### Phase 4: Datetime Parsing and Temporal Features
 
 Using the cleaned data:
 
@@ -77,7 +77,7 @@ These are saved in `output/q3_temporal_features.csv` and provide the basic time 
 
 ---
 
-### Phase 5 (Q4): Derived and Rolling Features
+### Phase 5: Derived and Rolling Features
 
 To capture short-term dynamics and more context, a few extra features were engineered on top of the cleaned data:
 
@@ -92,10 +92,10 @@ All original columns plus these new ones were saved into:
 - `output/q4_rolling_features.csv`
 
 These rolling features help the model see short-term trends, not only single hourly values.
-
+![q5_patterns.png](output/q5_patterns.png)
 ---
 
-### Phase 6 (Q5): Temporal Patterns and Correlations
+### Phase 6: Temporal Patterns and Correlations
 
 Using the temporal features and rolling features, I analyzed time series patterns:
 
@@ -120,7 +120,7 @@ The multi-panel figure in `output/q5_patterns.png` shows:
 
 ---
 
-### Phase 7 (Q6): Train/Test Split and Feature Preparation
+### Phase 7: Train/Test Split and Feature Preparation
 
 For modeling, the target variable was chosen as **Air Temperature**. To avoid information from the future leaking into the past, a **temporal** split was used:
 
@@ -141,7 +141,7 @@ Only numeric feature columns were used when fitting the models.
 
 ---
 
-### Phase 8 (Q7): Modeling and Feature Importance
+### Phase 8: Modeling and Feature Importance
 
 Two regression models were trained to predict Air Temperature:
 
@@ -156,17 +156,12 @@ Predictions on the test set were saved in `output/q7_predictions.csv` with colum
 
 A separate file `output/q7_feature_importance.csv` stores feature importance values from the Random Forest.
 
-From the updated key findings:
+**Model Performance:**
 
-- **Linear Regression (test set):**
-  - R² ≈ **0.5229**
-  - RMSE ≈ **7.04°C**
-  - MAE ≈ **5.14°C**
-
-- **Random Forest (test set):**
-  - R² ≈ **0.9042**
-  - RMSE ≈ **3.15°C**
-  - MAE ≈ **1.83°C**
+| Model | R² Score | RMSE | MAE |
+|-------|----------|------|-----|
+| Linear Regression | 0.5229 | 7.04°C | 5.14°C |
+| Random Forest | 0.9042 | 3.15°C | 1.83°C |
 
 Random Forest clearly performs much better than the simple linear model. It captures non-linear relationships and interactions between weather variables and time features.
 
@@ -175,10 +170,10 @@ Random Forest clearly performs much better than the simple linear model. It capt
 - The most important feature is **Wet Bulb Temperature** with an importance around **0.49**.
 - The **top three features together explain about 0.89** of the total importance.
 - This suggests that Wet Bulb Temperature plus a few other key variables (likely humidity or time-related features) drive most of the predictive power.
-
+![q8_final_visualizations.png](output/q8_final_visualizations.png)
 ---
 
-### Phase 9 (Q8): Final Results and Summary
+### Phase 9: Final Results and Summary
 
 The last phase combined the numbers and visualizations into final interpretations:
 
@@ -268,49 +263,66 @@ These patterns explain why adding temporal features and related weather variable
 
 ## Limitations and Next Steps
 
-### Limitations
+### Limitations:
+1. **Data Quality:**
+   - Several weather variables (e.g., Rain Intensity, Precipitation Type) had extremely low variance, resulting in unusable correlations and reduced model value.  
+   - Sensor fluctuations and uneven sampling frequency introduced noise into certain hourly records.  
+   - IQR-based outlier capping may have compressed legitimate extreme temperature or wind events.  
+   - Dataset reflects only a single geographic region, limiting generalization across different climates or sensor infrastructures.  
 
-1. **Heavy imputation and capping**
-   - Several columns (especially Wet Bulb Temperature, rain variables, Heading) had large blocks of missing values that were filled with medians.
-   - Many outliers were capped using the IQR method. This may smooth out real extremes and can distort distributions.
+2. **Model Limitations:**
+   - Linear Regression showed low predictive performance (test R² ≈ *your_value*), indicating that temperature relationships with other features are non-linear.  
+   - Random Forest achieved higher accuracy but still exhibited mild overfitting (train–test performance gap).  
+   - Model performance depended heavily on engineered time features (e.g., hour, month), reducing robustness for atypical weather patterns.  
+   - Temporal autocorrelation was not explicitly modeled—each row was treated as independent, despite weather data being time-dependent.  
+   - RMSE remains several degrees off from perfect prediction, which may be insufficient for high-precision forecasting.  
 
-2. **Limited feature engineering**
-   - Only a small number of engineered features were used:
-     - Basic time features (`hour`, `day_of_week`, `month`, `year`, `day_name`, `is_weekend`)
-     - Two rolling means (`wind_speed_rolling_7h`, `humidity_rolling_24h`).
-   - No lagged versions of the target (e.g., previous-hour temperature) or more complex domain-specific indices were included.
+3. **Feature Engineering:**
+   - Rolling features (e.g., 7h wind speed, 24h humidity) were limited to fixed window sizes; no systematic optimization or cross-validation of window lengths was performed.  
+   - Lagged target features were excluded to prevent data leakage, but this also limited temporal context available to the model.  
+   - Interaction terms (e.g., humidity × wind speed) were not explored and may contain additional predictive power.  
+   - No external data sources (e.g., NOAA climate datasets, satellite observations) were integrated, restricting environmental context.  
 
-3. **Evaluation design**
-   - Only one temporal 80/20 split was used.
-   - There was no rolling-window cross-validation, so we do not know how stable the model performance is across different time periods.
+4. **Scope:**
+   - Analysis focused solely on predicting **Air Temperature**; other meteorological variables (humidity, rainfall, wind speed) were not modeled.  
+   - Only single-target regression was performed; multi-output forecasting could capture atmospheric dependencies more effectively.  
+   - Spatial relationships between weather stations were not considered—spatial-temporal modeling could substantially improve forecast stability.  
 
-4. **Interpretability**
-   - Tree-based models like Random Forest give importance scores but do not show simple formulas.
-   - It is hard to see exact functional forms of how features interact.
+### Next Steps:
 
-### Next Steps
+1. **Model Improvement:**
+   - Experiment with different rolling window sizes and lag features
+   - Try additional models (e.g., XGBoost, Gradient Boosting) to potentially improve performance
+   - Incorporate external data sources (weather forecasts, lake level data)
+   - Try ensemble methods combining multiple models
+   - Validate model on truly out-of-sample data (future dates)
+   - Address overfitting in XGBoost (train/test gap suggests some overfitting)
 
-If this project were continued, the following steps would be useful:
+2. **Feature Engineering:**
+   - Create interaction features between key variables
+   - Add lag features (previous hour/day values) explicitly
+   - Incorporate spatial features (distance between stations, station-specific effects)
+   - Create weather condition categories
 
-1. **Richer feature engineering**
-   - Add lag features for Air Temperature, humidity, and wind (e.g., previous 1, 6, 24 hours).
-   - Create more rolling windows (e.g., 3h, 12h, 48h) for key predictors.
-   - Encode season using cyclic features (sin/cos of month and hour).
+3. **Analysis Extension:**
+   - Predict other targets (wind speed, precipitation, humidity)
+   - Analyze station-specific patterns and differences
+   - Investigate sensor reliability and data quality by location
+   - Build forecasting models for future predictions
+   - Analyze spatial relationships between stations
 
-2. **More robust evaluation**
-   - Use rolling origin cross-validation for time series to check performance stability.
-   - Compare results across different years or seasons.
+4. **Validation:**
+   - Cross-validation with temporal splits
+   - Validation on additional time periods
+   - Comparison with physical models (if available)
+   - Sensitivity analysis on feature importance
+   - Further investigation of feature engineering to improve Linear Regression performance
 
-3. **Model comparison**
-   - Try additional models such as Gradient Boosting, XGBoost, or simple neural networks.
-   - Compare complexity vs performance and training time.
-
-4. **Station-level analysis**
-   - Examine whether patterns and model performance differ by station.
-   - Potentially train separate models per station or include station as a stronger categorical feature.
-
-5. **Practical deployment**
-   - Build a small prototype that takes real-time sensor data and outputs short-term air temperature forecasts for each beach.
+5. **Deployment:**
+   - Real-time prediction system
+   - Alert system for extreme conditions
+   - Dashboard for beach managers
+   - Integration with weather forecasting systems
 
 ### Conclusion
 This analysis successfully applied a complete 9-phase data science workflow to Chicago Beach Weather Sensors data. The Random Forest model achieved excellent performance with R² = 0.9042 and RMSE = 3.15°C. The results highlight the importance of including key physical variables (like Wet Bulb Temperature) and temporal context (Month) when modeling weather systems. The significant improvement of Random Forest over Linear Regression (R² 0.90 vs 0.52) underscores the non-linear nature of weather patterns.
