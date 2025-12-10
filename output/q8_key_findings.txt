@@ -1,0 +1,19 @@
+KEY FINDINGS SUMMARY
+MODEL PERFORMANCE:
+- Best performing model: Linear Regression
+- Linear Regression (test): R²=1.0000, RMSE=0.0000, MAE=0.0000
+- Random Forest (test):    R²=1.0000, RMSE=0.0090, MAE=0.0002
+
+FEATURE IMPORTANCE:
+- Most important feature: Air Temperature (importance=1.0000)
+- Top 3 features explain 1.0000 of total importance
+
+TEMPORAL PATTERNS:
+- Temporal analysis suggests noticeable daily and seasonal variation.
+- These patterns support the idea that time-related features are relevant.
+
+DATA QUALITY:
+- Rows before cleaning: 196526
+- Rows after cleaning:  196526
+- Missing values were imputed.
+- Outliers were capped using the IQR method.

@@ -1,0 +1,16 @@
+MODEL PERFORMANCE METRICS
+LINEAR REGRESSION:
+  Train R²: 1.0000
+  Test R²:  1.0000
+  Train RMSE: 0.0000
+  Test RMSE:  0.0000
+  Train MAE:  0.0000
+  Test MAE:   0.0000
+
+RANDOM FOREST:
+  Train R²: 1.0000
+  Test R²:  1.0000
+  Train RMSE: 0.0007
+  Test RMSE:  0.0090
+  Train MAE:  0.0000
+  Test MAE:   0.0002

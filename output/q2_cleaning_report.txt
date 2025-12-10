@@ -1,0 +1,73 @@
+DATA CLEANING REPORT
+====================
+
+Rows before cleaning: 196526
+
+Missing Data Handling:
+- Air Temperature: 75 missing values
+  Method: Filled with median
+
+- Wet Bulb Temperature: 76054 missing values
+  Method: Filled with median
+
+- Rain Intensity: 76054 missing values
+  Method: Filled with median
+
+- Total Rain: 76054 missing values
+  Method: Filled with median
+
+- Precipitation Type: 76054 missing values
+  Method: Filled with median
+
+- Barometric Pressure: 146 missing values
+  Method: Filled with median
+
+- Heading: 76054 missing values
+  Method: Filled with median
+
+Outlier Handling:
+- Air Temperature: 97 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Wet Bulb Temperature: 13308 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Humidity: 185 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Rain Intensity: 4250 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Interval Rain: 15862 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Total Rain: 34745 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Precipitation Type: 8427 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Wind Speed: 12228 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Maximum Wind Speed: 4024 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Barometric Pressure: 4611 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Solar Radiation: 29571 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Heading: 86626 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+- Battery Life: 6 outliers detected (IQR method)
+  Method: Capped using IQR bounds
+
+Duplicates Removed: 0
+
+Data Type Conversions:
+- Measurement Timestamp converted to datetime
+
+Rows after cleaning: 196526

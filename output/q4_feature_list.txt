@@ -1,0 +1,8 @@
+hour
+day_of_week
+month
+year
+day_name
+is_weekend
+wind_speed_rolling_7h
+humidity_rolling_24h
