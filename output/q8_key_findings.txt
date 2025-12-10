@@ -1,12 +1,12 @@
 KEY FINDINGS SUMMARY
 MODEL PERFORMANCE:
-- Best performing model: Linear Regression
-- Linear Regression (test): R²=1.0000, RMSE=0.0000, MAE=0.0000
-- Random Forest (test):    R²=1.0000, RMSE=0.0090, MAE=0.0002
+- Best performing model: Random Forest
+- Linear Regression (test): R²=0.5229, RMSE=7.0390, MAE=5.1403
+- Random Forest (test):    R²=0.9042, RMSE=3.1537, MAE=1.8253
 
 FEATURE IMPORTANCE:
-- Most important feature: Air Temperature (importance=1.0000)
-- Top 3 features explain 1.0000 of total importance
+- Most important feature: Wet Bulb Temperature (importance=0.4869)
+- Top 3 features explain 0.8936 of total importance
 
 TEMPORAL PATTERNS:
 - Temporal analysis suggests noticeable daily and seasonal variation.
