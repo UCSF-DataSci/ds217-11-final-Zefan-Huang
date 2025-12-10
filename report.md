@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This project analyzes hourly weather sensor data from Chicago beaches along Lake Michigan. The dataset contains 196,526 rows and 18 columns of measurements such as air temperature, humidity, wind, rain, and pressure from 2015–2025. The main goal is to understand temporal patterns and build models to predict **Air Temperature** using other variables and time-based features. After going through a full 9-phase workflow (exploration → cleaning → feature engineering → modeling), the **Random Forest** model achieved the best performance on the test set (R² ≈ 0.90, RMSE ≈ 3.15°C, MAE ≈ 1.83°C), showing that air temperature can be predicted reasonably well from cleaned sensor data and temporal features.
+This analysis examines weather sensor data from Chicago beaches along Lake Michigan, covering 195,672 hourly measurements from April 2015 to November 2025 across three weather stations. The project follows a complete 9-phase data science workflow to understand temporal patterns in beach weather conditions and build predictive models for air temperature. Key findings include strong seasonal temperature patterns, significant daily cycles, and successful prediction models. the **Random Forest** model achieved the best performance on the test set (R² ≈ 0.90, RMSE ≈ 3.15°C, MAE ≈ 1.83°C), showing that air temperature can be predicted reasonably well from cleaned sensor data and temporal features.
 
 ---
 

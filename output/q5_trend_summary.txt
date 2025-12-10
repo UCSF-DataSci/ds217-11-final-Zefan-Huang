@@ -11,6 +11,6 @@ DAILY PATTERNS:
 - Minimum typically at hour 6
 
 TOP CORRELATIONS:
+- day_of_week vs is_weekend: 0.787
+- is_weekend vs day_of_week: 0.787
 - Air Temperature vs Wet Bulb Temperature: 0.744
-- Air Temperature vs Rain Intensity: nan
-- Air Temperature vs Interval Rain: nan
